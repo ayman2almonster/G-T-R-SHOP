@@ -5,33 +5,104 @@ client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
 });
 
-client.on("ready", async () => {
-            var guild = client.guilds.get('540626945679949855');
+const Discord = require('discord.js');
+const client = new Discord.Client();
 
-          setInterval(() => {
-          if(!guild) return;
-         var nameon=" Online ♪ :0" ; // يحب ان تبقي الصفر في الاسم المهم يكون موجود
-          var channel1 = guild.channels.get("اي دي الروم يلي يظهر حالات الاعضاء النشطين");
-           channel1.setName(`${nameon.replace(0, guild.members.filter(s => s.presence.status != 'offline').size)}`).catch(err => {
-              if(err) return;
-            });
-          },500);
-         var nameoff=" Offline ♪ :0" ; // يحب ان تبقي الصفر في الاسم المهم يكون موجود
-          var channel2 = guild.channels.get("اي دي الروم يلي يظهر حالات الاعضاء الاوف");
-           channel2 .setName(`${nameoff.replace(0, guild.members.filter(s => s.presence.status == 'offline').size)}`).catch(err => {
-              if(err) return;
-            });
-          },500);
-         var members=" Members♪ :0" ; // يحب ان تبقي الصفر في الاسم المهم يكون موجود
-          var channel3 = guild.channels.get("600653680882221068");
-           channel3 .setName(`${members.replace(0, guild.memberCount}`).catch(err => {
-              if(err) return;
-            });
-          },500);
 
-      
+//bc
+
+client.on("message", message => {
+    if (message.content.startsWith("$obc")) {
+                 if (!message.member.hasPermission("ADMINISTRATOR"))  return;
+  let args = message.content.split(" ").slice(1);
+  var argresult = args.join(' ');
+  message.guild.members.filter(m => m.presence.status !== 'all').forEach(m => {
+  m.send(`${argresult}\n ${m}`);
+  })
+  message.channel.send(`\`${message.guild.members.filter( m => m.presence.status !== 'all').size}\`:mailbox:  عدد المستلمين `);
+  message.delete();
+  };
+  });
+
+
+//bc online
+
+
+  var prefix = "$";
+
+  client.on("message", message => {
+  
+              if (message.content.startsWith(prefix + "bc")) {
+                           if (!message.member.hasPermission("ADMINISTRATOR"))  return;
+    let args = message.content.split(" ").slice(1);
+    var argresult = args.join(' '); 
+    message.guild.members.filter(m => m.presence.status !== 'offline').forEach(m => {
+   m.send(`${argresult}\n ${m}`);
+  })
+   message.channel.send(`\`${message.guild.members.filter(m => m.presence.status !== 'online').size}\` :mailbox:  عدد المستلمين `); 
+   message.delete(); 
+  };     
+  });
+
+client.on('message',async msg => {
+     if(msg.channel.type === "dm") return;
+  if(msg.author.bot) return;
+  var prefix = "$";
+  if(msg.content.startsWith(prefix + "sets")) {
+  if(!msg.guild.member(msg.author).hasPermissions('MANAGE_CHANNELS')) return msg.reply('❌ **go play minecraft**');
+  if(!msg.guild.member(client.user).hasPermissions(['MANAGE_CHANNELS'])) return msg.reply('❌ **البوت لا يمتلك صلاحية**');
+  var ggg= msg.guild.createChannel('SERVER STATS', 'category').then(kk => {
+           var ccc =msg.guild.createChannel('SERVER STATS', 'voice').then(al => {
+                var aa =msg.guild.createChannel('SERVER STATS', 'voice').then(alp => {
+                   var aaa =msg.guild.createChannel('SERVER STATS', 'voice').then(alph => {
+       al.setParent(kk);
+       alp.setParent(kk);
+       alph.setParent(kk);
        
-      });
+     al.overwritePermissions(msg.guild.id, {
+      CONNECT: false,
+      SPEAK: false
+    });
+     alp.overwritePermissions(msg.guild.id, {
+      CONNECT: false,
+      SPEAK: false
+    });
+     alph.overwritePermissions(msg.guild.id, {
+      CONNECT: false,
+      SPEAK: false
+    });
+  setInterval(() => {
+      var currentTime = new Date(),
+hours = currentTime.getHours() + 3 ,
+minutes = currentTime.getMinutes(),
+Seconds = currentTime.getSeconds(),
+Year = currentTime.getFullYear(),
+Month = currentTime.getMonth() + 1,
+Dat = currentTime.getDate()
+if (minutes < 10) {
+minutes = "0" + minutes;
+}
+var suffix = "AM";
+if (hours >= 12) {
+suffix = "PM";
+hours = hours - 12;
+}
+if (hours == 0) {
+hours = 12;
+}
+     al.setName(`Voice Online :[ ${msg.guild.members.filter(m => m.voiceChannel).size} ]`);
+      alp.setName(`Time :[${hours} : ${minutes} : ${Seconds} ${suffix}]`);
+        alph.setName(`[ Date : [${Year} - ${Month} - ${Dat} ]`);
+ },1000);
+                   })
+   
+                })
+           })
+  })
+           
+  }
+ 
+});
 
 const reps = JSON.parse(fs.readFileSync("./reps.json","utf8"));
 client.on("message", msg => {
@@ -148,28 +219,6 @@ client.on('guildMemberAdd', member=> {
     member.addRole(member.guild.roles.find("name","●MEMBERS●"));
     });
 
-
-client.on('message', message => { //iTzMurtaja#8951
-if(message.content.startsWith(prefix + "onbc")) { //iTzMurtaja#8951
-if(message.author.bot) return; //iTzMurtaja#8951
-if (!message.member.hasPermission("ADMINISTRATOR")) return message.reply(`**✖｜You need premessions.`); //iTzMurtaja#8951
-var args = message.content.split(" ").slice(1).join(" ") //iTzMurtaja#8951
-message.channel.send(`Done.`) //iTzMurtaja#8951
-message.guild.members.filter(m => m.presence.status === 'online').forEach(m => { //iTzMurtaja#8951
-    m.send(`${args}`) //iTzMurtaja#8951
-  }); //iTzMurtaja#8951
-}}); //iTzMurtaja#8951
-
-client.on('message', message => { //iTzMurtaja#8951
-if(message.content.startsWith(prefix + "offbc")) { //iTzMurtaja#8951
-if(message.author.bot) return; //iTzMurtaja#8951
-if (!message.member.hasPermission("ADMINISTRATOR")) return message.reply(`**✖｜You need premessions.`); //iTzMurtaja#8951
-var args = message.content.split(" ").slice(1).join(" ") //iTzMurtaja#8951
-message.channel.send(`Done.`) //iTzMurtaja#8951
-message.guild.members.filter(m => m.presence.status === 'offline').forEach(m => { //iTzMurtaja#8951
-    m.send(`${args}`) //iTzMurtaja#8951
-  }); //iTzMurtaja#8951
-}}); //iTzMurtaja#8951
 
 client.on("message", message => {  //iTzMurtaja
     if(message.content.startsWith(prefix + "emoji")) { //iTzMurtaja
