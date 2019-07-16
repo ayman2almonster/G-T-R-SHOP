@@ -5,10 +5,6 @@ client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
 });
 
-const Discord = require('discord.js');
-const client = new Discord.Client();
-
-
 //bc
 
 client.on("message", message => {
@@ -32,7 +28,7 @@ client.on("message", message => {
 
   client.on("message", message => {
   
-              if (message.content.startsWith(prefix + "bc")) {
+              if (message.content.startsWith(prefix + "bbc")) {
                            if (!message.member.hasPermission("ADMINISTRATOR"))  return;
     let args = message.content.split(" ").slice(1);
     var argresult = args.join(' '); 
@@ -201,7 +197,7 @@ client.on('ready', () => {
       console.log(`ON ${client.guilds.size} Servers '     Script By : EX Clan ' `);
     console.log(`----------------`);
   console.log(`Logged in as ${client.user.tag}!`);
-client.user.setGame(`Soon | Vettel`,"http://twitch.tv/Death Shop")
+client.user.setGame(`Soon | G~T~R`,"http://twitch.tv/Death Shop")
 client.user.setStatus("dnd")
 });
 
