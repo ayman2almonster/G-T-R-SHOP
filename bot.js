@@ -48,8 +48,8 @@ client.on('message', message => {
      if(!message.guild.member(client.user).hasPermission('MANAGE_GUILD')) return message.channel.send(`**I don't have Permission!**`);
     let args = message.content.split(" ").slice(1)
     let messagecount = parseInt(args);
-    if (args > 100) return message.reply(`** The number can't be more than **100** .**`).then(messages => messages.delete(5000))
-    if(!messagecount) args = '100';
+    if (args > 500) return message.reply(`** The number can't be more than **500** .**`).then(messages => messages.delete(5000))
+    if(!messagecount) args = '500';
     message.channel.fetchMessages({limit: messagecount}).then(messages => message.channel.bulkDelete(messages)).then(msgs => {
     message.channel.send(`** Done , Deleted \`${msgs.size}\` messages.**`).then(messages => messages.delete(5000));
     })
