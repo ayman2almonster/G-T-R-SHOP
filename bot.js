@@ -5,6 +5,92 @@ client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
 });
 
+client.on("ready", async () => {
+            var guild = client.guilds.get('540626945679949855');
+
+          setInterval(() => {
+          if(!guild) return;
+         var nameon=" Online ♪ :0" ; // يحب ان تبقي الصفر في الاسم المهم يكون موجود
+          var channel1 = guild.channels.get("اي دي الروم يلي يظهر حالات الاعضاء النشطين");
+           channel1.setName(`${nameon.replace(0, guild.members.filter(s => s.presence.status != 'offline').size)}`).catch(err => {
+              if(err) return;
+            });
+          },500);
+         var nameoff=" Offline ♪ :0" ; // يحب ان تبقي الصفر في الاسم المهم يكون موجود
+          var channel2 = guild.channels.get("اي دي الروم يلي يظهر حالات الاعضاء الاوف");
+           channel2 .setName(`${nameoff.replace(0, guild.members.filter(s => s.presence.status == 'offline').size)}`).catch(err => {
+              if(err) return;
+            });
+          },500);
+         var members=" Members♪ :0" ; // يحب ان تبقي الصفر في الاسم المهم يكون موجود
+          var channel3 = guild.channels.get("600653680882221068");
+           channel3 .setName(`${members.replace(0, guild.memberCount}`).catch(err => {
+              if(err) return;
+            });
+          },500);
+
+      
+       
+      });
+
+const reps = JSON.parse(fs.readFileSync("./reps.json","utf8"));
+client.on("message", msg => {
+      moment.locale('ar_ly');
+    let mention = msg.mentions.users.first();
+    if(!msg.guild) return;
+    if(msg.author.bot) return;
+    if(!reps[msg.author.id]) reps[msg.author.id] = {
+        rep: 0,
+        reps: 1
+    }
+        fs.writeFile("./reps.json", JSON.stringify(reps), function(e) {
+            if (e) throw e;
+        })
+    if(msg.content.startsWith(prefix + "rep")){
+        if(!mention) return msg.channel.send(`**عليك ان تمنشن الشخص اولا**`)
+        if(mention.id === msg.author.id) return msg.reply(`**من جد؟؟**`)
+     
+           if(!reps[mention.id]) reps[mention.id] = {
+        rep: 0,
+        reps: 1
+    }
+   
+     if(reps[msg.author.id].reps != moment().format('L')) {
+ 
+       reps[msg.author.id].reps = moment().format('L');
+          reps[mention.id].rep += 1
+        msg.reply(`**
+ تم اعطاْء اعجاب لـ
+ 
+${emote3}-User \`${mention.username}\`
+ 
+**`)
+let emb = new Discord.RichEmbed()
+ .setColor('#36393f')
+          .setAuthor(mention.tag,mention.avatarURL)
+          .setTitle(`**تم اعطأك اعجاب **`)
+          .addField(`**اسم الذي قام بأعطأك اعجاب**`, `\`${msg.author.username}\``)
+          .addField(`**ايدي الذي قام بأعطأك اعجاب **`, `\`${msg.author.id}\``)
+          .addField(`**سيرفر الذي تم اعجابك به **`,`\`${msg.guild.name}\``)
+          mention.send(emb);
+         
+             fs.writeFile("./reps.json", JSON.stringify(reps), function(e) {
+            if (e) throw e;
+        })
+    }else {
+       msg.reply(`**
+لأ تستطيع ان تعطي اعجاب
+ 
+-User \`${mention.username}\`
+ 
+ 
+-Time يمكنك ان تعطي اعجاب \`${moment().endOf('day').fromNow()}\` **`)
+   
+    } 
+       }
+});
+}
+
  client.on('message', (message) => {
     if (message.content.startsWith('$kick')) {
         var member= message.mentions.members.first();
